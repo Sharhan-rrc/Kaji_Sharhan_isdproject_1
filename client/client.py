@@ -2,24 +2,20 @@ from email_validator import validate_email, EmailNotValidError
 
 class Client:
     def __init__(self, client_number: int, first_name: str, last_name: str, email_address: str):
-        # Validate client_number
         if not isinstance(client_number, int):
             raise ValueError("Client number must be an integer.")
         self.__client_number = client_number
 
-        # Validate first_name
-        stripped_first_name = first_name.strip()
-        if not stripped_first_name:
+        first_name = first_name.strip()
+        if not first_name:
             raise ValueError("First name cannot be blank.")
-        self.__first_name = stripped_first_name
+        self.__first_name = first_name
 
-        # Validate last_name
-        stripped_last_name = last_name.strip()
-        if not stripped_last_name:
+        last_name = last_name.strip()
+        if not last_name:
             raise ValueError("Last name cannot be blank.")
-        self.__last_name = stripped_last_name
+        self.__last_name = last_name
 
-        # Validate email_address
         try:
             validate_email(email_address)
             self.__email_address = email_address
