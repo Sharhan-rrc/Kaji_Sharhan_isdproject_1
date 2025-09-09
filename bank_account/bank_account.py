@@ -40,7 +40,9 @@ class BankAccount:
             raise ValueError(f"Deposit amount: {amount} must be numeric.")
         if amount <= 0:
             formatted = f"${amount:,.2f}"
-            raise ValueError(f"Deposit amount: {formatted} must be positive.")
+            raise ValueError(
+                f"Deposit amount: {formatted} must be positive."
+            )
         self.update_balance(amount)
 
     def withdraw(self, amount: float) -> None:
@@ -48,15 +50,21 @@ class BankAccount:
             raise ValueError(f"Withdraw amount: {amount} must be numeric.")
         if amount <= 0:
             formatted = f"${amount:,.2f}"
-            raise ValueError(f"Withdraw amount: {formatted} must be positive.")
+            raise ValueError(
+                f"Withdraw amount: {formatted} must be positive."
+            )
         if amount > self.__balance:
             formatted_amount = f"${amount:,.2f}"
             formatted_balance = f"${self.__balance:,.2f}"
             raise ValueError(
-                f"Withdraw amount: {formatted_amount} must not exceed the account balance: {formatted_balance}."
+                f"Withdraw amount: {formatted_amount} must not exceed the "
+                f"account balance: {formatted_balance}."
             )
         self.update_balance(-amount)
 
     def __str__(self) -> str:
         formatted_balance = f"${self.__balance:,.2f}"
-        return f"Account Number: {self.__account_number} Balance: {formatted_balance}\n"
+        return (
+            f"Account Number: {self.__account_number} "
+            f"Balance: {formatted_balance}\n"
+        )

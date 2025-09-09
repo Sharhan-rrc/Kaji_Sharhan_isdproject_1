@@ -1,7 +1,13 @@
 from email_validator import validate_email, EmailNotValidError
 
 class Client:
-    def __init__(self, client_number: int, first_name: str, last_name: str, email_address: str):
+    def __init__(
+        self,
+        client_number: int,
+        first_name: str,
+        last_name: str,
+        email_address: str
+    ):
         if not isinstance(client_number, int):
             raise ValueError("Client number must be an integer.")
         self.__client_number = client_number
@@ -39,4 +45,7 @@ class Client:
         return self.__email_address
 
     def __str__(self) -> str:
-        return f"{self.__last_name}, {self.__first_name} [{self.__client_number}] - {self.__email_address}\n"
+        return (
+            f"{self.__last_name}, {self.__first_name} "
+            f"[{self.__client_number}] - {self.__email_address}\n"
+        )

@@ -9,11 +9,13 @@ __credits__ = ""
 from bank_account.bank_account import BankAccount
 from client.client import Client
 
+
 def main():
     """Test the functionality of the methods encapsulated 
     in the BankAccount and Client classes.
     """ 
-    # 1. Code a statement which creates a valid instance of the Client class.
+    # 1. Code a statement which creates a valid instance of the Client 
+    # class.
     try:
         client = Client(1010, "Susan", "Clark", "susanclark@pixell.com")
     except Exception as e:
@@ -30,7 +32,9 @@ def main():
 
     # 4. Create a BankAccount instance with an INVALID balance value.
     try:
-        invalid_account = BankAccount(20020, client.client_number, "invalid-balance")
+        invalid_account = BankAccount(
+            20020, client.client_number, "invalid-balance"
+        )
     except Exception as e:
         print(e)
 
@@ -76,6 +80,7 @@ def main():
 
     # 12. Print the BankAccount instance again.
     print(bank_account)
+
 
 if __name__ == "__main__":
     main()

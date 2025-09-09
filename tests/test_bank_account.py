@@ -15,7 +15,9 @@ class TestBankAccount(unittest.TestCase):
         account = BankAccount(20019, 1010, 6764.67)
         self.assertEqual(account._BankAccount__account_number, 20019)
         self.assertEqual(account._BankAccount__client_number, 1010)
-        self.assertEqual(round(account._BankAccount__balance, 2), 6764.67)
+        self.assertEqual(
+            round(account._BankAccount__balance, 2), 6764.67
+        )
 
     def test_invalid_account_number_type(self):
         with self.assertRaises(ValueError):
@@ -27,7 +29,9 @@ class TestBankAccount(unittest.TestCase):
 
     def test_invalid_balance_type_sets_zero(self):
         account = BankAccount(20019, 1010, "not-a-number")
-        self.assertEqual(round(account._BankAccount__balance, 2), 0.0)
+        self.assertEqual(
+            round(account._BankAccount__balance, 2), 0.0
+        )
 
     def test_account_number_property(self):
         account = BankAccount(12345, 1010, 100.0)
@@ -44,17 +48,23 @@ class TestBankAccount(unittest.TestCase):
     def test_update_balance_with_valid_amount(self):
         account = BankAccount(12345, 1010, 100.0)
         account.update_balance(50.25)
-        self.assertEqual(round(account._BankAccount__balance, 2), 150.25)
+        self.assertEqual(
+            round(account._BankAccount__balance, 2), 150.25
+        )
 
     def test_update_balance_with_invalid_amount_does_not_change_balance(self):
         account = BankAccount(12345, 1010, 100.0)
         account.update_balance("invalid")
-        self.assertEqual(round(account._BankAccount__balance, 2), 100.0)
+        self.assertEqual(
+            round(account._BankAccount__balance, 2), 100.0
+        )
 
     def test_deposit_valid_amount(self):
         account = BankAccount(12345, 1010, 100.0)
         account.deposit(200.0)
-        self.assertEqual(round(account._BankAccount__balance, 2), 300.0)
+        self.assertEqual(
+            round(account._BankAccount__balance, 2), 300.0
+        )
 
     def test_deposit_non_numeric_raises_exception(self):
         account = BankAccount(12345, 1010, 100.0)
@@ -71,7 +81,9 @@ class TestBankAccount(unittest.TestCase):
     def test_withdraw_valid_amount(self):
         account = BankAccount(12345, 1010, 200.0)
         account.withdraw(50.0)
-        self.assertEqual(round(account._BankAccount__balance, 2), 150.0)
+        self.assertEqual(
+            round(account._BankAccount__balance, 2), 150.0
+        )
 
     def test_withdraw_non_numeric_raises_exception(self):
         account = BankAccount(12345, 1010, 200.0)
@@ -89,7 +101,9 @@ class TestBankAccount(unittest.TestCase):
         account = BankAccount(12345, 1010, 100.0)
         with self.assertRaises(ValueError) as context:
             account.withdraw(150.0)
-        self.assertIn("must not exceed the account balance", str(context.exception))
+        self.assertIn(
+            "must not exceed the account balance", str(context.exception)
+        )
 
     def test_str_method_format(self):
         account = BankAccount(20019, 1010, 6764.67)
