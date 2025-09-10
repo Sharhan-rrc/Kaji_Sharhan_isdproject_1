@@ -8,15 +8,28 @@ the following command:
 import unittest
 from client.client import Client
 
+
 class TestClient(unittest.TestCase):
 
+    def setUp(self):
+        # Default valid client used in tests that don't require 
+        # custom input
+        self.default_client = Client(
+            1001, "Alice", "Smith", "alice@pixell.com"
+        )
+
     def test_attributes_set_correctly(self):
-        client = Client(1001, "Alice", "Smith", "alice@pixell.com")
-        self.assertEqual(client._Client__client_number, 1001)
-        self.assertEqual(client._Client__first_name, "Alice")
-        self.assertEqual(client._Client__last_name, "Smith")
         self.assertEqual(
-            client._Client__email_address,
+            self.default_client._Client__client_number, 1001
+        )
+        self.assertEqual(
+            self.default_client._Client__first_name, "Alice"
+        )
+        self.assertEqual(
+            self.default_client._Client__last_name, "Smith"
+        )
+        self.assertEqual(
+            self.default_client._Client__email_address,
             "alice@pixell.com"
         )
 
@@ -35,8 +48,7 @@ class TestClient(unittest.TestCase):
     def test_invalid_email_sets_default(self):
         client = Client(1004, "Alice", "Smith", "invalid-email")
         self.assertEqual(
-            client._Client__email_address,
-            "email@pixell-river.com"
+            client._Client__email_address, "email@pixell-river.com"
         )
 
     def test_client_number_property(self):
@@ -57,7 +69,9 @@ class TestClient(unittest.TestCase):
 
     def test_str_method_format(self):
         client = Client(1009, "Charlie", "Brown", "charlie@pixell.com")
-        expected = "Brown, Charlie [1009] - charlie@pixell.com\n"
+        expected = (
+            "Brown, Charlie [1009] - charlie@pixell.com\n"
+        )
         self.assertEqual(str(client), expected)
 
 
