@@ -25,3 +25,6 @@ Assignment 1: Financial System Foundations: Class Design & Testing
 - This ensures that the data remains consistent and protected from unintended
   changes, while still allowing necessary interactions through clearly 
   defined interfaces.
+
+# Assignment 2: implementing distinct service charge calculation methods for 
+# Chequing, Investment, and Savings accounts.
