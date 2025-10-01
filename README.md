@@ -9,7 +9,7 @@ clients who have one or more bank accounts.
 Sharhan Kaji
 
 ## Assignment
-Assignment 1: Financial System Foundations: Class Design & Testing
+# Assignment 1: Financial System Foundations: Class Design & Testing
 
 ## Encapsulation
 - Encapsulation in the `BankAccount` class is implemented by restricting 
@@ -26,5 +26,21 @@ Assignment 1: Financial System Foundations: Class Design & Testing
   changes, while still allowing necessary interactions through clearly 
   defined interfaces.
 
-# Assignment 2: implementing distinct service charge calculation methods for 
+# Assignment 2: Implementing distinct service charge calculation methods for
 # Chequing, Investment, and Savings accounts.
+
+## Polymorphism
+- Polymorphism in this project is achieved by defining a common interface
+ in the BankAccount superclass, specifically through the method 
+ get_service_charges(), which is implemented differently in each 
+ subclass: ChequingAccount, SavingsAccount, and InvestmentAccount.
+- Each subclass overrides the get_service_charges() method to provide 
+ distinct logic tailored to its specific type of account.
+- This allows the client code to interact with any BankAccount instance 
+ polymorphically—calling get_service_charges() without needing to know 
+ the exact subclass type.
+- By leveraging this approach, the system supports dynamic method dispatch 
+ at runtime, enabling flexible and extensible handling of service charge
+ calculations. This polymorphic design enhances maintainability and 
+ scalability by centralizing shared behavior in the superclass, while 
+ allowing specialized behavior in the subclasses.
