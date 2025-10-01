@@ -1,3 +1,12 @@
+"""
+Module: savings_account
+Description: This module defines the SavingsAccount class, a subclass of
+BankAccount that represents a savings account with a minimum balance
+requirement. It includes methods for calculating service charges based on
+whether the account balance meets or falls below the minimum threshold,
+and overrides the string representation to display savings-specific details.
+"""
+
 from bank_account.bank_account import BankAccount
 from datetime import date
 

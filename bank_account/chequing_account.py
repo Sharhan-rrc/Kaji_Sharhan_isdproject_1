@@ -1,3 +1,12 @@
+"""
+Module: chequing_account
+Description: This module defines the ChequingAccount class, a subclass of
+BankAccount that represents a chequing account with additional attributes
+for overdraft limit and overdraft rate. It includes methods for calculating
+service charges based on overdraft status and overrides the string
+representation to display chequing-specific details.
+"""
+
 from bank_account.bank_account import BankAccount
 from datetime import date
 

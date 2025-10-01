@@ -1,3 +1,12 @@
+"""
+Module: investment_account
+Description: This module defines the InvestmentAccount class, a subclass of
+BankAccount that represents an investment account with a management fee.
+It includes methods for calculating service charges based on account age
+and fee eligibility, and overrides the string representation to display
+investment-specific details including fee status.
+"""
+
 from bank_account.bank_account import BankAccount
 from datetime import date, timedelta
 
