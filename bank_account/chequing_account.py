@@ -71,9 +71,9 @@ class ChequingAccount(BankAccount):
         """
         if self.balance >= self.__overdraft_limit:
             return self.BASE_SERVICE_CHARGE
-
-        overdraft_fee = (self.__overdraft_limit - self.balance) * self.__overdraft_rate
-        return self.BASE_SERVICE_CHARGE + overdraft_fee
+        else:
+            overdraft_fee = (self.__overdraft_limit - self.balance) * self.__overdraft_rate
+            return self.BASE_SERVICE_CHARGE + overdraft_fee
 
     def __str__(self) -> str:
         """
