@@ -46,4 +46,14 @@ Sharhan Kaji
  allowing specialized behavior in the subclasses.
 
 # Assignment 3: 
-Assignment [assignment number]: [Indicate the name and description of the current assignment]
+Assignment 3:
+
+
+## Strategy Pattern
+This project uses the Strategy Pattern to handle service charge calculations for different types of bank accounts. Instead of putting the logic directly in each account class, the calculation is delegated to a strategy class.
+Each account type (Chequing, Savings, Investment) has its own strategy:
+- Chequing uses OverdraftStrategy
+- Savings uses MinimumBalanceStrategy
+- Investment uses ManagementFeeStrategy
+This makes the code easier to maintain and extend. If you ever need to add new rules or account types, you can just create a new strategy class without changing the existing ones.
+All original tests and the client program (A02_main.py) still work as expected, confirming the refactor was successful.
