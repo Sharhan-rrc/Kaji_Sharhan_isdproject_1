@@ -17,6 +17,8 @@ class BankAccount:
         _date_created (date): Date the account was created.
     """
 
+    BASE_SERVICE_CHARGE: float = 0.50
+
     def __init__(self, account_number: int, client_number: int, balance: float, date_created: date):
         if not isinstance(account_number, int):
             raise ValueError("Account number must be an integer.")
@@ -74,7 +76,7 @@ class BankAccount:
         Placeholder method for service charge calculation.
         Should be overridden in subclasses using strategy pattern.
         """
-        return 0.0
+        return self.BASE_SERVICE_CHARGE
 
     def __str__(self) -> str:
         formatted_balance = f"${self.__balance:,.2f}"
