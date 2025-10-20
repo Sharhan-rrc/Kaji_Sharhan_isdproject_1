@@ -45,9 +45,7 @@ Sharhan Kaji
  scalability by centralizing shared behavior in the superclass, while 
  allowing specialized behavior in the subclasses.
 
-# Assignment 3: 
-Assignment 3:
-
+# Assignment 3: Strategy and Observer Pattern Integration in Bank Account System
 
 ## Strategy Pattern
 This project uses the Strategy Pattern to handle service charge calculations for different types of bank accounts. Instead of putting the logic directly in each account class, the calculation is delegated to a strategy class.
