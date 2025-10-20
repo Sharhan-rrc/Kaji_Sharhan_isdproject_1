@@ -57,3 +57,9 @@ Each account type (Chequing, Savings, Investment) has its own strategy:
 - Investment uses ManagementFeeStrategy
 This makes the code easier to maintain and extend. If you ever need to add new rules or account types, you can just create a new strategy class without changing the existing ones.
 All original tests and the client program (A02_main.py) still work as expected, confirming the refactor was successful.
+
+## Observer Pattern
+This application uses the Observer Pattern to notify clients of important changes in their bank accounts. Each BankAccount acts as a Subject, and each Client acts as an Observer. Clients can subscribe to accounts, and they receive notifications when:
+- A transaction exceeds the large transaction threshold.
+- The account balance drops below the minimum level.
+Notifications are simulated as emails and saved to output/observer_emails.txt. This design keeps the notification logic separate from account operations, making the system more modular and easier to maintain.
