@@ -61,3 +61,5 @@ This application uses the Observer Pattern to notify clients of important change
 - A transaction exceeds the large transaction threshold.
 - The account balance drops below the minimum level.
 Notifications are simulated as emails and saved to output/observer_emails.txt. This design keeps the notification logic separate from account operations, making the system more modular and easier to maintain.
+
+# Assignment 4: [Indicate the name and description of the current assignment]
