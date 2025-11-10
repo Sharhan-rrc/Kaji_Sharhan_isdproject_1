@@ -23,14 +23,18 @@ class InvestmentAccount(BankAccount):
     Extends BankAccount to add management fee functionality based on account age.
 
     Attributes:
-        __strategy (ManagementFeeStrategy): Strategy for calculating service charges
-        __management_fee (float): Management fee amount
+        _InvestmentAccount__strategy (ManagementFeeStrategy): Strategy for calculating service charges
+        _InvestmentAccount__management_fee (float): Management fee amount
         _date_created (date): Date the account was created
 
     Business Rules:
         - Default management fee is 2.55 if invalid input provided
         - Management fee is waived for accounts 10 years or older
         - Service charges include base charge plus management fee for accounts under 10 years
+
+    Raises:
+        ValueError: If account_number is not an integer (from parent class)
+        ValueError: If client_number is not an integer (from parent class)
     """
 
     def __init__(
@@ -52,7 +56,8 @@ class InvestmentAccount(BankAccount):
             management_fee (float): Fee charged for managing the account
 
         Raises:
-            ValueError: If account_number or client_number are not integers
+            ValueError: If account_number is not an integer (from parent class)
+            ValueError: If client_number is not an integer (from parent class)
         """
         super().__init__(account_number, client_number, balance, date_created)
 
@@ -76,9 +81,10 @@ class InvestmentAccount(BankAccount):
             date: Date object representing 10 years ago
 
         Note:
-            Uses 365.25 days per year to account for leap years in the calculation
+            Uses 365.25 days per year to account for leap years
         """
-        return date.today() - timedelta(days=10 * 365.25)
+        result = date.today() - timedelta(days=10 * 365.25)
+        return result
 
     def get_service_charges(self) -> float:
         """
@@ -89,31 +95,36 @@ class InvestmentAccount(BankAccount):
 
         Note:
             Delegates to ManagementFeeStrategy for charge calculation based on
-            account age and management fee
+            account age and management fee. Falls back to manual calculation if strategy fails.
         """
+        result = self.BASE_SERVICE_CHARGE
+
         if self.__strategy is not None:
-            return self.__strategy.calculate_charges(self._date_created)
-        
-        if self._date_created <= self._ten_years_ago():
-            return self.BASE_SERVICE_CHARGE
-        return self.BASE_SERVICE_CHARGE + self.__management_fee
+            result = self.__strategy.calculate_charges(self._date_created)
+        elif self._date_created > self._ten_years_ago():
+            result = self.BASE_SERVICE_CHARGE + self.__management_fee
+
+        return result
 
     def __str__(self) -> str:
         """
         Create a detailed string representation of the investment account.
 
         Returns:
-            str: Formatted string containing:
-                - Account number and balance (from parent class)
-                - Account creation date
-                - Management fee (shown as "Waived" if account ≥ 10 years)
-                - Account type identifier
+            str: Formatted string containing account number, balance,
+                 creation date, management fee status, and account type
         """
-        base_str = super().__str__().strip()
+        base_string = super().__str__().strip()
         formatted_date = self._date_created.isoformat()
-        fee_display = "Waived" if self._date_created <= self._ten_years_ago() else f"${self.__management_fee:,.2f}"
-        return (
-            f"{base_str}\n"
+
+        if self._date_created <= self._ten_years_ago():
+            fee_display = "Waived"
+        else:
+            fee_display = f"${self.__management_fee:,.2f}"
+
+        result = (
+            f"{base_string}\n"
             f"Date Created: {formatted_date} "
             f"Management Fee: {fee_display} Account Type: Investment"
         )
+        return result

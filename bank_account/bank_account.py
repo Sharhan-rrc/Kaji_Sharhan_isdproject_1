@@ -30,14 +30,14 @@ class BankAccount(Subject, ABC):
         BASE_SERVICE_CHARGE (float): Base service charge applied to all accounts
         LARGE_TRANSACTION_THRESHOLD (float): Amount above which transactions trigger notifications
         LOW_BALANCE_LEVEL (float): Balance threshold for low balance warnings
-        __account_number (int): Unique identifier for the account
-        __client_number (int): Associated client's identifier
-        __balance (float): Current monetary balance
+        _BankAccount__account_number (int): Unique identifier for the account
+        _BankAccount__client_number (int): Associated client's identifier
+        _BankAccount__balance (float): Current monetary balance
         _date_created (date): Account creation date
-        _observers (list): List of attached observers
 
     Raises:
-        ValueError: If account_number or client_number are not integers
+        ValueError: If account_number is not an integer
+        ValueError: If client_number is not an integer
     """
 
     BASE_SERVICE_CHARGE: float = 0.50
@@ -55,7 +55,8 @@ class BankAccount(Subject, ABC):
             date_created (date): Account creation date
 
         Raises:
-            ValueError: If account_number or client_number are not integers
+            ValueError: If account_number is not an integer
+            ValueError: If client_number is not an integer
         """
         super().__init__()
 
@@ -72,21 +73,39 @@ class BankAccount(Subject, ABC):
         except (ValueError, TypeError):
             self.__balance = 0.0
 
-        self._date_created = date_created if isinstance(date_created, date) else date.today()
+        if isinstance(date_created, date):
+            self._date_created = date_created
+        else:
+            self._date_created = date.today()
 
     @property
     def account_number(self) -> int:
-        """Get the account number."""
+        """
+        Get the account number.
+
+        Returns:
+            int: The unique account number
+        """
         return self.__account_number
 
     @property
     def client_number(self) -> int:
-        """Get the client number."""
+        """
+        Get the client number.
+
+        Returns:
+            int: The associated client identifier
+        """
         return self.__client_number
 
     @property
     def balance(self) -> float:
-        """Get the current balance."""
+        """
+        Get the current balance.
+
+        Returns:
+            float: The current account balance
+        """
         return self.__balance
 
     def attach(self, observer) -> None:
@@ -129,15 +148,17 @@ class BankAccount(Subject, ABC):
             - Large transactions (above LARGE_TRANSACTION_THRESHOLD)
         """
         try:
-            self.__balance += float(amount)
+            amount_value = float(amount)
         except (ValueError, TypeError):
             return
+
+        self.__balance += amount_value
 
         if self.__balance < self.LOW_BALANCE_LEVEL:
             self.notify(f"Low balance warning ${self.__balance:,.2f}: on account {self.__account_number}.")
 
-        if abs(amount) > self.LARGE_TRANSACTION_THRESHOLD:
-            self.notify(f"Large transaction ${abs(amount):,.2f}: on account {self.__account_number}.")
+        if abs(amount_value) > self.LARGE_TRANSACTION_THRESHOLD:
+            self.notify(f"Large transaction ${abs(amount_value):,.2f}: on account {self.__account_number}.")
 
     def deposit(self, amount: float) -> None:
         """
@@ -147,7 +168,8 @@ class BankAccount(Subject, ABC):
             amount (float): Amount to deposit
 
         Raises:
-            ValueError: If amount is not numeric or is not positive
+            ValueError: If amount is not numeric
+            ValueError: If amount is not positive
         """
         if not isinstance(amount, (int, float)):
             raise ValueError(f"Deposit amount: {amount} must be numeric.")
@@ -163,7 +185,9 @@ class BankAccount(Subject, ABC):
             amount (float): Amount to withdraw
 
         Raises:
-            ValueError: If amount is not numeric, not positive, or exceeds balance
+            ValueError: If amount is not numeric
+            ValueError: If amount is not positive
+            ValueError: If amount exceeds balance
         """
         if not isinstance(amount, (int, float)):
             raise ValueError(f"Withdraw amount: {amount} must be numeric.")

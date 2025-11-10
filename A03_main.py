@@ -25,8 +25,8 @@ from datetime import date
 try:
     client_one = Client(1010, "Sharhan", "Kaji", "sharhan.kaji@example.com")
 except ValueError as error:
-    print(f"Error creating client: {error}")
-    exit(1)
+    print(f"Error creating client one: {error}")
+    client_one = None
 
 # 3a. Create a ChequingAccount object with data of your choice, using the client_number 
 # of the client created in step 2.
@@ -34,29 +34,37 @@ except ValueError as error:
 # of the client created in step 2.
 try:
     chequing_one = ChequingAccount(10001, client_one.client_number, 100.00, date.today(), -200.00, 0.05)
-    savings_one = SavingsAccount(20001, client_one.client_number, 1000.00, date.today(), 50.00)
-except ValueError as error:
-    print(f"Error creating accounts: {error}")
-    exit(1)
+except (ValueError, AttributeError) as error:
+    print(f"Error creating chequing account one: {error}")
+    chequing_one = None
 
-# 4 The ChequingAccount and SavingsAccount objects are 'Subject' objects.
-# The Client object is an 'Observer' object.  
-# 4a.  Attach the Client object (created in step 1) to the ChequingAccount object (created in step 2).
-# 4a.  Attach the Client object (created in step 1) to the SavingsAccount object (created in step 2).
-chequing_one.attach(client_one)
-savings_one.attach(client_one)
+try:
+    savings_one = SavingsAccount(20001, client_one.client_number, 1000.00, date.today(), 50.00)
+except (ValueError, AttributeError) as error:
+    print(f"Error creating savings account one: {error}")
+    savings_one = None
+
+if chequing_one and savings_one and client_one:
+    chequing_one.attach(client_one)
+    savings_one.attach(client_one)
 
 # 5a. Create a second Client object with data of your choice.
 # 5b. Create a SavingsAccount object with data of your choice, using the client_number 
 # of the client created in this step.
 try:
     client_two = Client(2020, "Amina", "Rivera", "amina.rivera@example.com")
-    savings_two = SavingsAccount(20002, client_two.client_number, 500.00, date.today(), 50.00)
 except ValueError as error:
-    print(f"Error creating second client or account: {error}")
-    exit(1)
+    print(f"Error creating client two: {error}")
+    client_two = None
 
-savings_two.attach(client_two)
+try:
+    savings_two = SavingsAccount(20002, client_two.client_number, 500.00, date.today(), 50.00)
+except (ValueError, AttributeError) as error:
+    print(f"Error creating savings account two: {error}")
+    savings_two = None
+
+if savings_two and client_two:
+    savings_two.attach(client_two)
 
 # 6. Use the ChequingAccount and SavingsAccount objects created 
 # in steps 3 and 5 above to perform transactions (deposits and withdraws) 

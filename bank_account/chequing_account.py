@@ -23,14 +23,18 @@ class ChequingAccount(BankAccount):
     Extends BankAccount to add overdraft limit and rate functionality.
 
     Attributes:
-        __overdraft_limit (float): Maximum allowed overdraft amount, typically negative
-        __overdraft_rate (float): Interest rate applied to overdrawn amounts
-        __strategy (OverdraftStrategy): Strategy for calculating overdraft charges
+        _ChequingAccount__overdraft_limit (float): Maximum allowed overdraft amount, typically negative
+        _ChequingAccount__overdraft_rate (float): Interest rate applied to overdrawn amounts
+        _ChequingAccount__strategy (OverdraftStrategy): Strategy for calculating overdraft charges
 
     Business Rules:
         - Default overdraft limit is -100.0 if invalid input provided
         - Default overdraft rate is 0.05 (5%) if invalid input provided
         - Service charges increase when balance falls below overdraft limit
+
+    Raises:
+        ValueError: If account_number is not an integer (from parent class)
+        ValueError: If client_number is not an integer (from parent class)
     """
 
     def __init__(
@@ -54,7 +58,8 @@ class ChequingAccount(BankAccount):
             overdraft_rate (float): Interest rate for overdraft calculations
 
         Raises:
-            ValueError: If account_number or client_number are not integers
+            ValueError: If account_number is not an integer (from parent class)
+            ValueError: If client_number is not an integer (from parent class)
         """
         super().__init__(account_number, client_number, balance, date_created)
 
@@ -85,34 +90,31 @@ class ChequingAccount(BankAccount):
 
         Note:
             Delegates to OverdraftStrategy for charge calculation based on balance
-            and overdraft limit
+            and overdraft limit. Falls back to manual calculation if strategy fails.
         """
+        result = self.BASE_SERVICE_CHARGE
+
         if self.__strategy is not None:
-            return self.__strategy.calculate_charges(self.balance)
-        
-        if self.balance >= self.__overdraft_limit:
-            return self.BASE_SERVICE_CHARGE
-        return (
-            self.BASE_SERVICE_CHARGE
-            + (self.__overdraft_limit - self.balance) * self.__overdraft_rate
-        )
+            result = self.__strategy.calculate_charges(self.balance)
+        elif self.balance < self.__overdraft_limit:
+            result = self.BASE_SERVICE_CHARGE + (self.__overdraft_limit - self.balance) * self.__overdraft_rate
+
+        return result
 
     def __str__(self) -> str:
         """
         Create a detailed string representation of the chequing account.
 
         Returns:
-            str: Formatted string containing:
-                - Account number and balance (from parent class)
-                - Overdraft limit in currency format
-                - Overdraft rate as percentage
-                - Account type identifier
+            str: Formatted string containing account number, balance,
+                 overdraft limit, rate, and account type
         """
-        base_str = super().__str__().strip()
+        base_string = super().__str__().strip()
         formatted_limit = f"${self.__overdraft_limit:,.2f}"
         formatted_rate = f"{self.__overdraft_rate * 100:.2f}%"
-        return (
-            f"{base_str}\n"
+        result = (
+            f"{base_string}\n"
             f"Overdraft Limit: {formatted_limit} "
             f"Overdraft Rate: {formatted_rate} Account Type: Chequing"
         )
+        return result

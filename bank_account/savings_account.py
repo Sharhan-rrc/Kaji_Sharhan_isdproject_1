@@ -23,13 +23,17 @@ class SavingsAccount(BankAccount):
     Extends BankAccount to add minimum balance functionality.
 
     Attributes:
-        __strategy (MinimumBalanceStrategy): Strategy for calculating service charges
-        __minimum_balance (float): Required minimum balance for the account
+        _SavingsAccount__strategy (MinimumBalanceStrategy): Strategy for calculating service charges
+        _SavingsAccount__minimum_balance (float): Required minimum balance for the account
 
     Business Rules:
         - Default minimum balance is 50.0 if invalid input provided
         - Additional service charge applies when balance falls below minimum
         - Service charges include base charge plus penalty for low balance
+
+    Raises:
+        ValueError: If account_number is not an integer (from parent class)
+        ValueError: If client_number is not an integer (from parent class)
     """
 
     def __init__(
@@ -51,7 +55,8 @@ class SavingsAccount(BankAccount):
             minimum_balance (float): Required minimum balance threshold
 
         Raises:
-            ValueError: If account_number or client_number are not integers
+            ValueError: If account_number is not an integer (from parent class)
+            ValueError: If client_number is not an integer (from parent class)
         """
         super().__init__(account_number, client_number, balance, date_created)
 
@@ -76,28 +81,30 @@ class SavingsAccount(BankAccount):
 
         Note:
             Delegates to MinimumBalanceStrategy for charge calculation based on
-            account balance and minimum balance requirement
+            account balance and minimum balance requirement. Falls back to manual
+            calculation if strategy fails.
         """
+        result = self.BASE_SERVICE_CHARGE
+
         if self.__strategy is not None:
-            return self.__strategy.calculate_charges(self.balance)
-        
-        if self.balance >= self.__minimum_balance:
-            return self.BASE_SERVICE_CHARGE
-        return self.BASE_SERVICE_CHARGE + 0.50
+            result = self.__strategy.calculate_charges(self.balance)
+        elif self.balance < self.__minimum_balance:
+            result = self.BASE_SERVICE_CHARGE + 0.50
+
+        return result
 
     def __str__(self) -> str:
         """
         Create a detailed string representation of the savings account.
 
         Returns:
-            str: Formatted string containing:
-                - Account number and balance (from parent class)
-                - Minimum balance requirement in currency format
-                - Account type identifier
+            str: Formatted string containing account number, balance,
+                 minimum balance requirement, and account type
         """
-        base_str = super().__str__().strip()
+        base_string = super().__str__().strip()
         formatted_minimum = f"${self.__minimum_balance:,.2f}"
-        return (
-            f"{base_str}\n"
+        result = (
+            f"{base_string}\n"
             f"Minimum Balance: {formatted_minimum} Account Type: Savings"
         )
+        return result
