@@ -14,7 +14,6 @@ Version: 1.0.0
 
 from bank_account.bank_account import BankAccount
 from datetime import date, timedelta
-import calendar
 from patterns.strategy.management_fee_strategy import ManagementFeeStrategy
 
 
@@ -83,17 +82,18 @@ class InvestmentAccount(BankAccount):
 
     def get_service_charges(self) -> float:
         """
-        Calculate total service charges based on account age.
+        Calculate service charges using the management fee strategy.
 
         Returns:
-            float: Total service charges including:
-                  - Base service charge for all accounts
-                  - Management fee if account is less than 10 years old
+            float: Total service charges calculated by the strategy
 
         Note:
-            Accounts 10 years or older only pay the base service charge
-            Newer accounts pay base charge plus management fee
+            Delegates to ManagementFeeStrategy for charge calculation based on
+            account age and management fee
         """
+        if self.__strategy is not None:
+            return self.__strategy.calculate_charges(self._date_created)
+        
         if self._date_created <= self._ten_years_ago():
             return self.BASE_SERVICE_CHARGE
         return self.BASE_SERVICE_CHARGE + self.__management_fee

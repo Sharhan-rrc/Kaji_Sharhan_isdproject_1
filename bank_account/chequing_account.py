@@ -25,7 +25,7 @@ class ChequingAccount(BankAccount):
     Attributes:
         __overdraft_limit (float): Maximum allowed overdraft amount, typically negative
         __overdraft_rate (float): Interest rate applied to overdrawn amounts
-        __strategy (OverdraftStrategy): Optional strategy for calculating overdraft charges
+        __strategy (OverdraftStrategy): Strategy for calculating overdraft charges
 
     Business Rules:
         - Default overdraft limit is -100.0 if invalid input provided
@@ -73,23 +73,23 @@ class ChequingAccount(BankAccount):
 
         try:
             self.__strategy = OverdraftStrategy(limit, rate)
-        except TypeError:
+        except Exception:
             self.__strategy = None
 
     def get_service_charges(self) -> float:
         """
-        Calculate service charges based on account balance and overdraft status.
+        Calculate service charges using the overdraft strategy.
 
         Returns:
-            float: Total service charges including:
-                  - Base service charge for all accounts
-                  - Additional charges if balance is below overdraft limit
+            float: Total service charges calculated by the strategy
 
         Note:
-            Charges = BASE_SERVICE_CHARGE + overdraft_penalty
-            where overdraft_penalty = (overdraft_limit - balance) * overdraft_rate
-            if balance is below overdraft_limit
+            Delegates to OverdraftStrategy for charge calculation based on balance
+            and overdraft limit
         """
+        if self.__strategy is not None:
+            return self.__strategy.calculate_charges(self.balance)
+        
         if self.balance >= self.__overdraft_limit:
             return self.BASE_SERVICE_CHARGE
         return (

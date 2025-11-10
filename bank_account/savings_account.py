@@ -69,18 +69,18 @@ class SavingsAccount(BankAccount):
 
     def get_service_charges(self) -> float:
         """
-        Calculate service charges based on account balance.
+        Calculate service charges using the minimum balance strategy.
 
         Returns:
-            float: Total service charges including:
-                  - Base service charge for all accounts
-                  - Additional 0.50 fee if balance is below minimum_balance
+            float: Total service charges calculated by the strategy
 
         Note:
-            Total charges:
-            - BASE_SERVICE_CHARGE (0.50) if balance >= minimum_balance
-            - BASE_SERVICE_CHARGE + 0.50 (total 1.00) if balance < minimum_balance
+            Delegates to MinimumBalanceStrategy for charge calculation based on
+            account balance and minimum balance requirement
         """
+        if self.__strategy is not None:
+            return self.__strategy.calculate_charges(self.balance)
+        
         if self.balance >= self.__minimum_balance:
             return self.BASE_SERVICE_CHARGE
         return self.BASE_SERVICE_CHARGE + 0.50

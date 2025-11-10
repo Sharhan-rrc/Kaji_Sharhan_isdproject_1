@@ -17,7 +17,7 @@ Version: 1.0.0
 """
 
 from datetime import date
-from abc import ABC
+from abc import ABC, abstractmethod
 from patterns.observer.subject import Subject
 
 
@@ -34,6 +34,7 @@ class BankAccount(Subject, ABC):
         __client_number (int): Associated client's identifier
         __balance (float): Current monetary balance
         _date_created (date): Account creation date
+        _observers (list): List of attached observers
 
     Raises:
         ValueError: If account_number or client_number are not integers
@@ -87,6 +88,33 @@ class BankAccount(Subject, ABC):
     def balance(self) -> float:
         """Get the current balance."""
         return self.__balance
+
+    def attach(self, observer) -> None:
+        """
+        Attach an observer to receive account notifications.
+
+        Args:
+            observer: Observer object implementing the Observer interface
+        """
+        super().attach(observer)
+
+    def detach(self, observer) -> None:
+        """
+        Detach an observer from account notifications.
+
+        Args:
+            observer: Observer object to remove from notification list
+        """
+        super().detach(observer)
+
+    def notify(self, message: str) -> None:
+        """
+        Notify all attached observers with a message.
+
+        Args:
+            message (str): The notification message to send to all observers
+        """
+        super().notify(message)
 
     def update_balance(self, amount: float) -> None:
         """
@@ -147,14 +175,18 @@ class BankAccount(Subject, ABC):
             )
         self.update_balance(-amount)
 
+    @abstractmethod
     def get_service_charges(self) -> float:
         """
         Calculate service charges for the account.
 
         Returns:
-            float: The base service charge amount
+            float: The calculated service charge amount
+
+        Note:
+            This is an abstract method that must be implemented by subclasses
         """
-        return self.BASE_SERVICE_CHARGE
+        pass
 
     def __str__(self) -> str:
         """
