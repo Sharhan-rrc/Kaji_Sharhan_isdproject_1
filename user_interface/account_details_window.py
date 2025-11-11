@@ -1,6 +1,18 @@
+"""
+Module: account_details_window
+Description: Implements the account details window for processing bank transactions.
+
+This module provides:
+- Display of account details (account number and balance)
+- Deposit transaction processing
+- Withdrawal transaction processing
+- Signal emission for balance updates
+- Transaction validation and error handling
+
+"""
 __author__ = "ACE Faculty"
 __version__ = "1.0.0"
-__credits__ = ""
+__credits__ = "Sharhan Kaji"
 
 from ui_superclasses.details_window import DetailsWindow
 from PySide6.QtWidgets import QMessageBox
