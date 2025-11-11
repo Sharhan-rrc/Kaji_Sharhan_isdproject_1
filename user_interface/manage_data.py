@@ -1,6 +1,18 @@
+"""
+Module: manage_data
+Description: Manages loading and updating client and account data from CSV files.
+
+This module provides:
+- Loading client and account data from CSV files
+- Creating Client and BankAccount objects from file data
+- Updating account balance data in CSV files
+- Logging errors encountered during data processing
+
+"""
+
 __author__ = "ACE Faculty"
 __version__ = "1.0.0"
-__credits__ = ""
+__credits__ = "Sharhan Kaji"
 
 import os
 import sys
