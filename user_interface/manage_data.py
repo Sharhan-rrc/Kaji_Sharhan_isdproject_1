@@ -88,9 +88,12 @@ def load_data() -> tuple[dict, dict]:
                 balance = float(record['balance'])
 
                 date_str = record['date_created']
-                try:
-                    date_created = datetime.strptime(date_str, '%Y-%m-%d').date()
-                except ValueError:
+                if isinstance(date_str, str):
+                    try:
+                        date_created = datetime.strptime(date_str, '%Y-%m-%d').date()
+                    except ValueError:
+                        date_created = date.today()
+                else:
                     date_created = date.today()
 
                 account_type = record['account_type']
