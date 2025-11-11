@@ -62,4 +62,37 @@ This application uses the Observer Pattern to notify clients of important change
 - The account balance drops below the minimum level.
 Notifications are simulated as emails and saved to output/observer_emails.txt. This design keeps the notification logic separate from account operations, making the system more modular and easier to maintain.
 
-# Assignment 4: [Indicate the name and description of the current assignment]
+# Assignment 4: GUI Development with PySide6 and Event-Driven Programming
+- Event-Driven Programming Paradigm
+  This application employs the Event-Driven Programming Paradigm through PySide6 to create a responsive graphical user interface for the PiXELL-River Financial banking system. The paradigm is implemented as follows:
+## Event Sources and Handlers
+- The application responds to user interactions through various event handlers:
+
+- Button Click Events: The lookup_button, deposit_button, withdraw_button, and exit_button all emit clicked signals that are connected to specific handler methods (slots) to process user actions.
+- Text Input Events: The client_number_edit widget emits a textChanged signal whenever the user modifies the input, triggering the clearing of the account table to maintain UI consistency.
+- Table Selection Events: The account_table widget emits a cellClicked signal when a user selects an account, which opens the account details dialog for transaction processing.
+
+## Signal-Slot Mechanism
+- The application uses PySide6's signal-slot mechanism to establish connections between events and their handlers:
+
+- Predefined Signals: Built-in Qt signals like clicked, textChanged, and cellClicked are connected to custom slot methods that implement the business logic.
+- Custom Signals: A custom balance_updated signal is defined in AccountDetailsWindow to notify the ClientLookupWindow when a transaction is completed, demonstrating inter-window communication.
+
+## Data Flow and Updates
+- The event-driven architecture ensures seamless data flow:
+
+  User actions trigger events (button clicks, text changes, cell selections)
+  Event handlers (slots) process the events and update the application state
+  The UI is refreshed to reflect the updated state
+  Custom signals propagate changes across different windows
+  Data persistence is maintained by updating the CSV files through the update_data function
+
+## Benefits of Event-Driven Design
+
+- Responsiveness: The application remains responsive to user input, processing events as they occur without blocking the UI
+Modularity: Each event handler is a separate method with a single responsibility, making the code easier to maintain and test
+
+- Loose Coupling: The signal-slot mechanism decouples event sources from event handlers, allowing flexible connections between components
+State Management: Events trigger state changes in a controlled manner, ensuring data consistency across the application
+
+This event-driven approach creates an interactive banking application where all functionality is triggered by user actions, providing an intuitive and responsive user experience.
