@@ -63,6 +63,7 @@ This application uses the Observer Pattern to notify clients of important change
 Notifications are simulated as emails and saved to output/observer_emails.txt. This design keeps the notification logic separate from account operations, making the system more modular and easier to maintain.
 
 # Assignment 4: GUI Development with PySide6 and Event-Driven Programming
+
 - Event-Driven Programming Paradigm
   This application employs the Event-Driven Programming Paradigm through PySide6 to create a responsive graphical user interface for the PiXELL-River Financial banking system. The paradigm is implemented as follows:
 ## Event Sources and Handlers

@@ -8,10 +8,11 @@ This module demonstrates:
 - Exception handling for banking operations
 - Transaction processing with various amounts
 
-Author: ACE Faculty
-Version: 1.0.0
-Credits: Sharhan Kaji
 """
+
+__Author__= "ACE Faculty"
+__Version__= "1.0.0"
+__Credits__= "Sharhan Kaji"
 
 # 1.  Import all BankAccount types using the bank_account package
 #     Import date
