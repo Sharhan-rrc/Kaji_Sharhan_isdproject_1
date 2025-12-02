@@ -6,8 +6,12 @@ This module provides:
 - Client lookup functionality by client number
 - Display of client information and associated bank accounts
 - Navigation to account details for transaction processing
+- Filtering functionality for account data
 - Event-driven programming implementation with PySide6
 
+Author: ACE Faculty
+Version: 1.0.0
+Credits: Sharhan Kaji
 """
 
 __author__ = "ACE Faculty"
@@ -32,6 +36,7 @@ class ClientLookupWindow(LookupWindow):
     - Displaying client details and their associated accounts
     - Opening account details for transactions
     - Updating account information after transactions
+    - Filtering account data based on user-defined criteria
 
     Attributes:
         client_listing (dict): Dictionary of client_number to Client objects
@@ -49,6 +54,7 @@ class ClientLookupWindow(LookupWindow):
         self.lookup_button.clicked.connect(self.__on_lookup_client)
         self.client_number_edit.textChanged.connect(self.__on_text_changed)
         self.account_table.cellClicked.connect(self.__on_select_account)
+        self.filter_button.clicked.connect(self.__on_filter_clicked)
 
     def __on_lookup_client(self) -> None:
         """
@@ -109,6 +115,8 @@ class ClientLookupWindow(LookupWindow):
                 row += 1
 
         self.account_table.resizeColumnsToContents()
+
+        self.__toggle_filter(False)
 
     def __on_text_changed(self) -> None:
         """
@@ -197,3 +205,59 @@ class ClientLookupWindow(LookupWindow):
         self.accounts[account.account_number] = account
 
         update_data(account)
+
+    def __on_filter_clicked(self) -> None:
+        """
+        Handles the filter button click event to apply or reset filtering.
+
+        When the button text is "Apply Filter", filters the account table based on
+        user-defined criteria from the filter combo box and filter edit field.
+        When the button text is "Reset", restores all rows to visible state.
+        """
+        if self.filter_button.text() == "Apply Filter":
+            filter_column = self.filter_combo_box.currentIndex()
+            filter_text = self.filter_edit.text().strip()
+
+            for i in range(self.account_table.rowCount()):
+                item = self.account_table.item(i, filter_column)
+                if item is not None:
+                    if filter_text.lower() in item.text().lower():
+                        self.account_table.setRowHidden(i, False)
+                    else:
+                        self.account_table.setRowHidden(i, True)
+                else:
+                    self.account_table.setRowHidden(i, True)
+
+            self.__toggle_filter(True)
+        else:
+            self.__toggle_filter(False)
+
+    def __toggle_filter(self, filter_on: bool) -> None:
+        """
+        Toggles the filter widgets to indicate whether filtering is active.
+
+        When filter_on is True, sets the button to "Reset" mode and disables
+        filter input widgets. When filter_on is False, sets the button to
+        "Apply Filter" mode, enables filter input widgets, and shows all rows.
+
+        Args:
+            filter_on (bool): True if filtering is active, False otherwise
+        """
+        self.filter_button.setEnabled(True)
+
+        if filter_on:
+            self.filter_button.setText("Reset")
+            self.filter_combo_box.setEnabled(False)
+            self.filter_edit.setEnabled(False)
+            self.filter_label.setText("Data is Currently Filtered")
+        else:
+            self.filter_button.setText("Apply Filter")
+            self.filter_combo_box.setEnabled(True)
+            self.filter_edit.setEnabled(True)
+            self.filter_edit.setText("")
+            self.filter_combo_box.setCurrentIndex(0)
+
+            for i in range(self.account_table.rowCount()):
+                self.account_table.setRowHidden(i, False)
+
+            self.filter_label.setText("Data is Not Currently Filtered")
