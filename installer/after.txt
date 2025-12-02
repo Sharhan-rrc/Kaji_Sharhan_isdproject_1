@@ -1,0 +1,57 @@
+Thank you for installing PiXELL-River Account Manager!
+
+Congratulations! PiXELL-River Account Manager has been successfully installed on your computer.
+
+Getting Started:
+
+1. Launch the Application:
+   - You can start PiXELL-River Account Manager via the shortcut created on your Desktop
+   - Alternatively, find it in the Start Menu under "PiXELL-River Account Manager"
+   - On first launch, you may need to run as administrator
+
+2. Quick Start Guide:
+   - Enter a client number in the lookup field
+   - Click "Lookup Client" to view client information and accounts
+   - Select an account from the table to perform transactions
+   - Use the filter functionality to quickly find specific accounts
+
+3. Features:
+   - Client information management
+   - Multiple account types: Checking, Savings, and Investment
+   - Deposit and withdrawal transactions
+   - Account filtering and searching
+   - Automatic balance updates and data persistence
+
+4. Data Location:
+   - Your account data is stored in the installation directory under "data"
+   - Log files are stored in the "logs" directory
+   - Regular backups of your data are recommended
+
+5. Support and Updates:
+   - We recommend that you check for updates regularly to ensure you are using the best version of PiXELL-River Account Manager
+   - Visit our website: https://www.rrc.ca
+   - Email support: support@pixell-river.com
+
+6. Troubleshooting:
+   - If the application doesn't start, try running as administrator
+   - Ensure all data files are present in the data directory
+   - Check the logs directory for error messages
+   - Contact support if issues persist
+
+7. Uninstallation:
+   - To uninstall, use the Windows "Add or Remove Programs" feature
+   - Your data files will be preserved unless you choose to delete them
+
+Important Notes:
+- Always close the application properly to ensure data is saved
+- Do not modify CSV files while the application is running
+- Keep regular backups of your data directory
+
+Thank you for choosing PiXELL-River Account Manager. Enjoy using our product, and we look forward to supporting your journey!
+
+Best regards,
+The PiXELL-River Account Manager Team
+
+Developed by: Sharhan Kaji
+Version: 1.0.0
+© 2025 PiXELL-River Inc.
