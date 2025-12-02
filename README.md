@@ -98,4 +98,72 @@ State Management: Events trigger state changes in a controlled manner, ensuring 
 
 This event-driven approach creates an interactive banking application where all functionality is triggered by user actions, providing an intuitive and responsive user experience.
 
-# Assugnment 5 : 
+# Assugnment 5 : Filtering Algorithm, Documentation Generation, and Application Distribution
+
+Got it 👍 — you want the documentation rewritten in a **clean, assignment-style format** (like your Event-Driven Programming example). Here’s your **Filtering + Documentation + Distribution** section reformatted to match that style:
+
+---
+
+# Assignment 4: GUI Development with PySide6 and Event-Driven Programming  
+
+## Filtering  
+The application integrates a custom filtering algorithm in the **ClientLookupWindow** to allow users to dynamically filter account data.  
+
+### Filter Algorithm Implementation  
+- **Input:**  
+  - Rows in the `account_table` widget  
+  - Filter criteria = selected column (Account Number, Balance, Date Created, Account Type) + search text  
+
+- **Process:**  
+  ```python
+  for i in range(self.account_table.rowCount()):
+  ```
+  - Retrieve item at row/column  
+  - Compare item text with search text (case-insensitive)  
+  - Use `setRowHidden()` to hide non-matching rows  
+
+- **Output:**  
+  - Only matching rows remain visible  
+  - Non-matching rows are hidden but preserved  
+  - Reset restores the full dataset  
+
+### User Interface Integration  
+- **Filter Toggle:** Button switches between "Apply Filter" and "Reset"  
+- **Dynamic Controls:** Combo box and text field disabled while filtering is active  
+- **Status Label:** Displays whether data is filtered  
+- **Reset:** Restores all rows and re-enables controls  
+
+### Benefits  
+- Demonstrates iteration and conditional logic  
+- Efficient for dataset size  
+- Flexible for new criteria  
+- Self-contained, no external dependencies  
+
+## HTML Documentation  
+Sphinx was used to generate professional HTML documentation:  
+- Class and method descriptions  
+- Parameter and return type details  
+- Complete docstrings  
+- Cross-references between modules  
+- Accessible via `build/html/index.html`  
+
+## Application Distribution  
+The application was packaged for distribution using **PyInstaller** and **Inno Setup**.  
+
+### Executable Creation  
+- PyInstaller bundles code, libraries, and CSV data  
+- Runs without Python installed  
+- Dependencies resolved automatically  
+
+### Installer Development  
+- Custom branding with name, version, publisher  
+- EULA and system requirements displayed  
+- Desktop shortcut and uninstaller included  
+- Professional wizard with progress indicators  
+
+### Distribution Benefits  
+- Easy installation for end users  
+- Polished, professional appearance  
+- Proper Windows integration  
+- Reliable execution across systems  
+- Embedded version info for updates  
