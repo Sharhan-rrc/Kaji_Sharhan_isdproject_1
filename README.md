@@ -97,3 +97,5 @@ Modularity: Each event handler is a separate method with a single responsibility
 State Management: Events trigger state changes in a controlled manner, ensuring data consistency across the application
 
 This event-driven approach creates an interactive banking application where all functionality is triggered by user actions, providing an intuitive and responsive user experience.
+
+# Assugnment 5 : 
