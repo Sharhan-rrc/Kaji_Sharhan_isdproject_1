@@ -100,8 +100,6 @@ This event-driven approach creates an interactive banking application where all 
 
 # Assugnment 5 : Filtering Algorithm, Documentation Generation, and Application Distribution
 
-Got it 👍 — you want the documentation rewritten in a **clean, assignment-style format** (like your Event-Driven Programming example). Here’s your **Filtering + Documentation + Distribution** section reformatted to match that style:
-
 ---
 
 # Assignment 4: GUI Development with PySide6 and Event-Driven Programming  
